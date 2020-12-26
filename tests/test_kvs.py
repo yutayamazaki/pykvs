@@ -14,6 +14,10 @@ class KVSTests(unittest.TestCase):
             shutil.rmtree(root)
         self.kvs = pykvs.PyKVS(root)
 
+    def test_get_default(self):
+        ret: str = self.kvs.get('not exist', 'default')
+        self.assertEqual(ret, 'default')
+
     def test_list(self):
         key: str = 'key'
         val: List[Any] = ['aa', 1, {'k': 'v'}]
@@ -24,7 +28,6 @@ class KVSTests(unittest.TestCase):
 
     def test_getitem(self):
         self.kvs['key2'] = 'value'
-        val: str = self.kvs['key2']
         self.assertEqual(self.kvs['key2'], self.kvs.get('key2'))
 
 

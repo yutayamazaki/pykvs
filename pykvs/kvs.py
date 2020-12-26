@@ -11,10 +11,10 @@ class PyKVS:
         if not os.path.exists(self.path):
             os.makedirs(self.path)
 
-    def get(self, key: str) -> Any:
+    def get(self, key: str, default: Any = None) -> Any:
         path: str = f'{self.path}/{key}'
         if not os.path.exists(path):
-            return None
+            return default
         with open(path, 'rb') as f:
             return pickle.loads(gzip.decompress(f.read()))
 
