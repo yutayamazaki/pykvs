@@ -2,7 +2,7 @@ import glob
 import gzip
 import os
 import pickle
-from typing import Any, Dict, List
+from typing import Any, Dict, Generator, List
 
 
 def _check_key(key: Any) -> None:
@@ -45,6 +45,11 @@ class PyKVS:
             key, _ = os.path.splitext(os.path.basename(path))
             keys.append(key)
         return keys
+
+    def values(self) -> Generator[Any, None, None]:
+        for path in glob.glob(f'{self.root}/*.gz'):
+            key, _ = os.path.splitext(os.path.basename(path))
+            yield self.get(key)
 
     def __getitem__(self, key: str) -> Any:
         return self.get(key)

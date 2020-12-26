@@ -1,7 +1,7 @@
 import os
 import shutil
 import unittest
-from typing import Any, List
+from typing import Any, Generator, List
 
 import pykvs
 
@@ -48,6 +48,14 @@ class KVSTests(unittest.TestCase):
         self.kvs['a'] = 'b'
         keys: List[str] = self.kvs.keys()
         self.assertEqual(keys, ['a'])
+
+    def test_values(self):
+        self.kvs['a'] = 'b'
+        values: List[Any] = list(self.kvs.values())
+        self.assertEqual(values, ['b'])
+
+        values_gen = self.kvs.values()
+        self.assertIsInstance(values_gen, Generator)
 
     def test_cache(self):
         self.kvs.set('key', 'Value', cache=True)
