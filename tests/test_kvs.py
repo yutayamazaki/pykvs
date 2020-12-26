@@ -8,11 +8,14 @@ import pykvs
 
 class KVSTests(unittest.TestCase):
 
+    root: str = './tests/pykvs'
+
     def setUp(self):
-        root: str = './tests/pykvs'
-        if os.path.exists(root):
-            shutil.rmtree(root)
-        self.kvs = pykvs.PyKVS(root)
+        self.kvs = pykvs.PyKVS(self.root)
+
+    def tearDown(self):
+        if os.path.exists(self.root):
+            shutil.rmtree(self.root)
 
     def test_get_default(self):
         ret: str = self.kvs.get('not exist', 'default')
@@ -29,6 +32,13 @@ class KVSTests(unittest.TestCase):
     def test_getitem(self):
         self.kvs['key2'] = 'value'
         self.assertEqual(self.kvs['key2'], self.kvs.get('key2'))
+
+    def test_delitem(self):
+        self.kvs['key'] = 'value'
+        self.assertTrue(os.path.exists('./tests/pykvs/key'))
+
+        del self.kvs['key']
+        self.assertFalse(os.path.exists('./tests/pykvs/key'))
 
 
 if __name__ == '__main__':

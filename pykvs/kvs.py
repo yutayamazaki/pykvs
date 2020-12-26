@@ -28,3 +28,7 @@ class PyKVS:
 
     def __setitem__(self, key: str, val: Any) -> None:
         return self.set(key, val)
+
+    def __delitem__(self, key: str) -> None:
+        path: str = f'{self.path}/{key}'
+        os.remove(path)
