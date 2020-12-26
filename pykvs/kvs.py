@@ -26,7 +26,6 @@ class PyKVS:
             return pickle.loads(gzip.decompress(f.read()))
 
     def __getitem__(self, key: str) -> Any:
-        _check_key(key)
         return self.get(key)
 
     def set(self, key: str, val: Any) -> None:
@@ -36,7 +35,6 @@ class PyKVS:
             f.write(gzip.compress(pickle.dumps(val)))
 
     def __setitem__(self, key: str, val: Any) -> None:
-        _check_key(key)
         return self.set(key, val)
 
     def __delitem__(self, key: str) -> None:
