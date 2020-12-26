@@ -22,6 +22,11 @@ class KVSTests(unittest.TestCase):
         val_ = self.kvs.get(key)
         self.assertEqual(val, val_)
 
+    def test_getitem(self):
+        self.kvs['key2'] = 'value'
+        val: str = self.kvs['key2']
+        self.assertEqual(self.kvs['key2'], self.kvs.get('key2'))
+
 
 if __name__ == '__main__':
     unittest.main()
