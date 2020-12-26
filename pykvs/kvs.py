@@ -6,7 +6,7 @@ from typing import Any
 
 class PyKVS:
 
-    def __init__(self, path: str):
+    def __init__(self, path: str) -> None:
         self.path: str = path
         if not os.path.exists(self.path):
             os.makedirs(self.path)
@@ -18,7 +18,7 @@ class PyKVS:
         with open(path, 'rb') as f:
             return pickle.loads(gzip.decompress(f.read()))
 
-    def save(self, key: str, val: Any) -> Any:
+    def save(self, key: str, val: Any) -> None:
         path: str = f'{self.path}/{key}'
         with open(path, 'wb') as f:
             f.write(gzip.compress(pickle.dumps(val)))
