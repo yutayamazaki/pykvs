@@ -49,6 +49,10 @@ class KVSTests(unittest.TestCase):
         keys: List[str] = self.kvs.keys()
         self.assertEqual(keys, ['a'])
 
+    def test_cache(self):
+        self.kvs.set('key', 'Value', cache=True)
+        self.assertEqual(self.kvs['key'], self.kvs.cache['key'])
+
 
 if __name__ == '__main__':
     unittest.main()

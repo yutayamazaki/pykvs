@@ -2,7 +2,7 @@ import glob
 import gzip
 import os
 import pickle
-from typing import Any, List
+from typing import Any, Dict, List
 
 
 def _check_key(key: Any) -> None:
@@ -16,6 +16,7 @@ class PyKVS:
         self.root: str = root
         if not os.path.exists(self.root):
             os.makedirs(self.root)
+        self.cache: Dict[str, Any] = {}
 
     def get(self, key: str, default: Any = None) -> Any:
         _check_key(key)
@@ -23,11 +24,17 @@ class PyKVS:
         path: str = f'{self.root}/{key}.gz'
         if not os.path.exists(path):
             return default
+
+        if key in self.cache:
+            return self.cache[key]
         with open(path, 'rb') as f:
             return pickle.loads(gzip.decompress(f.read()))
 
-    def set(self, key: str, val: Any) -> None:
+    def set(self, key: str, val: Any, cache: bool = False) -> None:
         _check_key(key)
+        if cache:
+            self.cache[key] = val
+
         path: str = f'{self.root}/{key}.gz'
         with open(path, 'wb') as f:
             f.write(gzip.compress(pickle.dumps(val)))
