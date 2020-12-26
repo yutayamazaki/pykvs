@@ -21,3 +21,7 @@ class KVSTests(unittest.TestCase):
 
         val_ = self.kvs.get(key)
         self.assertEqual(val, val_)
+
+
+if __name__ == '__main__':
+    unittest.main()
