@@ -21,7 +21,7 @@ class KVSTests(unittest.TestCase):
     def test_list(self):
         key: str = 'key'
         val: List[Any] = ['aa', 1, {'k': 'v'}]
-        self.kvs.save(key, val)
+        self.kvs.set(key, val)
 
         val_ = self.kvs.get(key)
         self.assertEqual(val, val_)
