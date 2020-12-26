@@ -40,6 +40,10 @@ class KVSTests(unittest.TestCase):
         del self.kvs['key']
         self.assertFalse(os.path.exists('./tests/pykvs/key'))
 
+    def test_key_not_str(self):
+        with self.assertRaises(TypeError):
+            self.kvs.set(10, 'val')
+
 
 if __name__ == '__main__':
     unittest.main()
