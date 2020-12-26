@@ -35,14 +35,19 @@ class KVSTests(unittest.TestCase):
 
     def test_delitem(self):
         self.kvs['key'] = 'value'
-        self.assertTrue(os.path.exists('./tests/pykvs/key'))
+        self.assertTrue(os.path.exists('./tests/pykvs/key.gz'))
 
         del self.kvs['key']
-        self.assertFalse(os.path.exists('./tests/pykvs/key'))
+        self.assertFalse(os.path.exists('./tests/pykvs/key.gz'))
 
     def test_key_not_str(self):
         with self.assertRaises(TypeError):
             self.kvs.set(10, 'val')
+
+    def test_keys(self):
+        self.kvs['a'] = 'b'
+        keys: List[str] = self.kvs.keys()
+        self.assertEqual(keys, ['a'])
 
 
 if __name__ == '__main__':
