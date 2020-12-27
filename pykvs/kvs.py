@@ -10,6 +10,16 @@ def _check_key(key: Any) -> None:
         raise TypeError('key must be str.')
 
 
+def load_pickle(path: str) -> Any:
+    with open(path, 'rb') as f:
+        return pickle.loads(gzip.decompress(f.read()))
+
+
+def dump_pickle(path: str, val: Any) -> None:
+    with open(path, 'wb') as f:
+        f.write(gzip.compress(pickle.dumps(val)))
+
+
 class PyKVS:
 
     def __init__(self, root: str) -> None:
@@ -27,8 +37,7 @@ class PyKVS:
 
         if key in self.cache:
             return self.cache[key]
-        with open(path, 'rb') as f:
-            return pickle.loads(gzip.decompress(f.read()))
+        return load_pickle(path)
 
     def set(self, key: str, val: Any, cache: bool = False) -> None:
         _check_key(key)
@@ -36,8 +45,7 @@ class PyKVS:
             self.cache[key] = val
 
         path: str = f'{self.root}/{key}.gz'
-        with open(path, 'wb') as f:
-            f.write(gzip.compress(pickle.dumps(val)))
+        dump_pickle(path, val)
 
     def keys(self) -> List[str]:
         keys: List[str] = []
