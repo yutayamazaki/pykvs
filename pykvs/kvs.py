@@ -2,7 +2,7 @@ import glob
 import gzip
 import os
 import pickle
-from typing import Any, Dict, Generator, List
+from typing import Any, Dict, Generator, List, Tuple
 
 
 def _check_key(key: Any) -> None:
