@@ -51,7 +51,7 @@ class PyKVS:
             key, _ = os.path.splitext(os.path.basename(path))
             yield self.get(key)
 
-    def items(self) -> Generator(Tuple[str, Any], None, None):
+    def items(self) -> Generator[Tuple[str, Any], None, None]:
         for path in glob.glob(f'{self.root}/*.gz'):
             key, _ = os.path.splitext(os.path.basename(path))
             yield (key, self.get(key))
