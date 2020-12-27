@@ -6,7 +6,7 @@ PyKVS is key-value store for Python. keys must be string and values must be pick
 
 ```python
 git clone https://github.com/yutayamazaki/pykvs.git
-python setup.py
+python setup.py install
 ```
 
 ## Example
