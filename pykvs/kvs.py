@@ -28,7 +28,7 @@ class PyKVS:
             os.makedirs(self.root)
         self.cache: Dict[str, Any] = {}
 
-    def get(self, key: str, default: Any = None) -> Any:
+    def get(self, key: str, default: Any = None, cache: bool = False) -> Any:
         _check_key(key)
 
         path: str = f'{self.root}/{key}.gz'
@@ -37,7 +37,11 @@ class PyKVS:
 
         if key in self.cache:
             return self.cache[key]
-        return load_pickle(path)
+
+        value = load_pickle(path)
+        if cache:
+            self.cache[key] = value
+        return value
 
     def set(self, key: str, val: Any, cache: bool = False) -> None:
         _check_key(key)
