@@ -66,5 +66,6 @@ class KVSTests(unittest.TestCase):
         self.kvs.get('key', cache=True)
         self.assertEqual(self.kvs.cache['key'], 'value')
 
+
 if __name__ == '__main__':
     unittest.main()
